@@ -1,13 +1,13 @@
-uniform mat4 projectionMatrix; // 画面に表示される範囲を決める行列に関すること
-uniform mat4 modelMatrix; // オブジェクトがどこにある、どの向きにあるのかを決める行列に関すること
-uniform mat4 viewMatrix; // カメラがどこにあり、どの方向を向いているのかを決める行列に関すること
-
-attribute vec3 position;
+uniform vec2 uFrequency;
+uniform float uTime;
 
 void main() {
+
   vec4 modelPosition = modelMatrix * vec4(position, 1.0);
 
-  modelPosition.z += 0.3;
+  // modelPosition.z += 0.3;
+  modelPosition.z += sin(modelPosition.x * uFrequency.x + uTime) * 0.1; // +：波を遅らせる。 -：波を進ませる
+  modelPosition.z += sin(modelPosition.y * uFrequency.y + uTime) * 0.1;
 
   vec4 viewPosition = viewMatrix * modelPosition;
   vec4 projectionPosition = projectionMatrix * viewPosition;

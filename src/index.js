@@ -3,6 +3,10 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import vertexShader from "./shaders/vertexShader";
 import fragmentShader from "./shaders/fragmentShader";
+import * as dat from "lil-gui";
+
+// デバッグ
+const gui = new dat.GUI();
 
 /**
  * Sizes
@@ -27,13 +31,35 @@ const textureLoader = new THREE.TextureLoader();
 const geometry = new THREE.PlaneGeometry(1, 1, 32, 32);
 
 // Material
-const material = new THREE.RawShaderMaterial({
+const material = new THREE.ShaderMaterial({
   vertexShader: vertexShader,
   fragmentShader: fragmentShader,
   transparent: true, // fragmentShaderで透明度を有効にする
   side: THREE.DoubleSide, // 裏側を表示する
   // wireframe: true,
+  uniforms: {
+    // グローバル変数
+    uFrequency: { value: new THREE.Vector2(10, 5) }, // 二次元ベクトルを指定
+    uTime: {
+      value: 0,
+    },
+    uColor: { value: new THREE.Color("pink") },
+  },
 });
+
+// デバッグを追加
+gui
+  .add(material.uniforms.uFrequency.value, "x")
+  .min(0)
+  .max(20)
+  .step(0.01)
+  .name("frequencyX");
+gui
+  .add(material.uniforms.uFrequency.value, "y")
+  .min(0)
+  .max(20)
+  .step(0.01)
+  .name("frequencyY");
 
 // Mesh
 const mesh = new THREE.Mesh(geometry, material);
@@ -79,8 +105,11 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 const clock = new THREE.Clock();
 
 const animate = () => {
+  // フレームごとに更新
+
   //時間取得
-  const elapsedTime = clock.getElapsedTime();
+  const elapsedTime = clock.getElapsedTime(); // 現在の経過時間を取得
+  material.uniforms.uTime.value = elapsedTime; // シェーダーに渡す
 
   controls.update();
 
