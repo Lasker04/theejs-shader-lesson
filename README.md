@@ -1,14 +1,4 @@
-# セットアップ方法
-
-Three.js のシェーダー開発するための開発環境です。
-リポジトリからソースをダウンロードして、VSCode に張り付けてください。
-
-貼り付けたら以下のコマンドを実行してください。
-
-```bash
-npm install
-```
-
-# ライセンス
-
-このリポジトリは[MIT license](https://en.wikipedia.org/wiki/MIT_License)です。
+- シェーダーで使う修飾子
+  - attribute：頂点情報を入れる
+  - uniform：global 変数を入れる
+  - varying： VertexShader から FragmentShader に変換を渡すときに使う
