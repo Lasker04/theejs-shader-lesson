@@ -1,6 +1,8 @@
 uniform vec2 uFrequency;
 uniform float uTime;
 
+varying vec2 vUv; // fragmentShaderに渡すための変数
+
 void main() {
 
   vec4 modelPosition = modelMatrix * vec4(position, 1.0);
@@ -13,5 +15,7 @@ void main() {
   vec4 projectionPosition = projectionMatrix * viewPosition;
   gl_Position = projectionPosition;
   // gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0); // 3Dのものを2Dとして表示するために行列を座標変換する
+
+  vUv = uv;
 }
 

@@ -4,6 +4,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import vertexShader from "./shaders/vertexShader";
 import fragmentShader from "./shaders/fragmentShader";
 import * as dat from "lil-gui";
+import jpFlag from "./textures/jp-flag.png";
 
 // デバッグ
 const gui = new dat.GUI();
@@ -26,6 +27,7 @@ const scene = new THREE.Scene();
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
+const flagTexture = textureLoader.load(jpFlag);
 
 // Geometry
 const geometry = new THREE.PlaneGeometry(1, 1, 32, 32);
@@ -44,7 +46,9 @@ const material = new THREE.ShaderMaterial({
       value: 0,
     },
     uColor: { value: new THREE.Color("pink") },
+    uTexture: { value: flagTexture },
   },
+  // ShaderMaterialはすでにuvを持つ
 });
 
 // デバッグを追加
