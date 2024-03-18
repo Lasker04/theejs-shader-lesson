@@ -67,6 +67,8 @@ gui
 
 // Mesh
 const mesh = new THREE.Mesh(geometry, material);
+// mesh.scale.y = 2 / 3; // 高さを縮める
+mesh.rotation.x = Math.PI * 0.5; // 90度回転
 scene.add(mesh);
 
 window.addEventListener("resize", () => {
